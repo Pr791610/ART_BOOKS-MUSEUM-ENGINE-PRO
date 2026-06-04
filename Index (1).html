@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ART & BOOKS | Museum Pro Platform</title>
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+
+    body{
+      background: radial-gradient(circle at top,#11111a,#07070c 70%);
+      color:#f5f5f5;
+      line-height:1.6;
+    }
+
+    header{
+      padding:24px;
+      text-align:center;
+      background:rgba(20,20,30,0.6);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    header h1{
+      font-size:30px;
+      letter-spacing:3px;
+      text-transform:uppercase;
+    }
+
+    header p{color:#aaa;font-size:13px;margin-top:4px;}
+
+    .topbar{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      padding:10px;
+    }
+
+    .topbar button{
+      padding:8px 12px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.05);
+      color:#fff;
+      cursor:pointer;
+      transition:0.2s;
+    }
+
+    .topbar button:hover{
+      transform:scale(1.05);
+    }
+
+    .hero{
+      padding:70px 20px 30px;
+      text-align:center;
+    }
+
+    .hero h2{font-size:42px;margin-bottom:10px;}
+    .hero p{color:#bbb;max-width:750px;margin:auto;}
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:22px;
+      padding:40px 24px;
+    }
+
+    .card{
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:16px;
+      overflow:hidden;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-6px) scale(1.02);
+      border-color:rgba(120,120,255,0.5);
+      box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .card img{
+      width:100%;
+      height:190px;
+      object-fit:cover;
+    }
+
+    .card-content{padding:16px;}
+    .card-content h3{font-size:18px;margin-bottom:6px;}
+    .card-content p{font-size:13px;color:#bbb;}
+
+    /* MODAL ARTWORK */
+    .modal{
+      position:fixed;inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,0.85);
+      backdrop-filter:blur(8px);
+      z-index:999;
+    }
+
+    .modal-content{
+      width:90%;max-width:900px;
+      background:rgba(20,20,30,0.95);
+      border-radius:16px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .modal img{width:100%;height:420px;object-fit:cover;}
+
+    .modal-body{padding:20px;}
+
+    .close{
+      position:absolute;
+      right:18px;
+      top:10px;
+      font-size:28px;
+      cursor:pointer;
+    }
+
+    .actions{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:8px 12px;
+      border:none;
+      border-radius:8px;
+      background:#4a4aff;
+      color:#fff;
+      cursor:pointer;
+      font-size:13px;
+    }
+
+    /* CERTIFICATE */
+    .cert-modal{
+      position:fixed;inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,0.9);
+      z-index:1000;
+    }
+
+    .cert-box{
+      width:90%;max-width:520px;
+      background:#12121a;
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:16px;
+      padding:20px;
+      text-align:center;
+    }
+
+    .cert-box img{margin-top:15px;border-radius:10px;}
+
+    /* STORE */
+    .store{
+      margin:20px;
+      padding:30px;
+      border:1px dashed rgba(255,255,255,0.2);
+      border-radius:14px;
+      text-align:center;
+      color:#aaa;
+    }
+
+    /* EDITOR */
+    .editor{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      width:320px;
+      background:rgba(20,20,30,0.95);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:14px;
+      padding:12px;
+      display:none;
+      z-index:1001;
+    }
+
+    .editor input,.editor textarea{
+      width:100%;
+      margin-bottom:8px;
+      padding:8px;
+      border-radius:8px;
+      border:none;
+      background:rgba(255,255,255,0.05);
+      color:#fff;
+    }
+
+    .editor button{
+      width:100%;
+      padding:10px;
+      border:none;
+      border-radius:8px;
+      background:#4a4aff;
+      color:#fff;
+      cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>ART & BOOKS</h1>
+  <p>Museum Pro Platform</p>
+</header>
+
+<div class="topbar">
+  <button onclick="toggleEditor()">Editor</button>
+  <button onclick="alert('Store module ready for next phase')">Store</button>
+</div>
+
+<section class="hero">
+  <h2>Digital Museum Experience</h2>
+  <p>Full museum interface with editor, modal viewer, certificate & QR verification system.</p>
+</section>
+
+<section class="grid" id="grid">
+
+  <div class="card" onclick="openModal('Artwork One','https://via.placeholder.com/800x500','Museum grade collectible artwork')">
+    <img src="https://via.placeholder.com/600x400" />
+    <div class="card-content">
+      <h3>Artwork One</h3>
+      <p>Museum grade collectible artwork</p>
+    </div>
+  </div>
+
+</section>
+
+<div class="store">
+  STORE MODULE (reserved for Stripe / sales / editions system)
+</div>
+
+<!-- MODAL ART -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">×</span>
+    <img id="modalImg" />
+    <div class="modal-body">
+      <h2 id="modalTitle"></h2>
+      <p id="modalDesc"></p>
+      <div class="actions">
+        <button class="btn" onclick="generateCertificate()">Generate Certificate</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CERTIFICATE -->
+<div class="cert-modal" id="certModal">
+  <div class="cert-box">
+    <h2>Certificate of Authenticity</h2>
+    <p id="certText"></p>
+    <img id="qrImg" />
+    <br><br>
+    <button class="btn" onclick="closeCert()">Close</button>
+  </div>
+</div>
+
+<!-- EDITOR -->
+<div class="editor" id="editor">
+  <input id="title" placeholder="Title" />
+  <input id="img" placeholder="Image URL" />
+  <textarea id="desc" placeholder="Description"></textarea>
+  <button onclick="addCard()">Add Artwork</button>
+</div>
+
+<script>
+
+let currentArtwork = {};
+
+function openModal(t,i,d){
+  modal.style.display='flex';
+  modalTitle.innerText=t;
+  modalImg.src=i;
+  modalDesc.innerText=d;
+
+  currentArtwork = {
+    id:'ART-'+Math.floor(Math.random()*999999),
+    title:t
+  };
+}
+
+function closeModal(){modal.style.display='none';}
+
+function generateCertificate(){
+  certModal.style.display='flex';
+
+  const verifyURL = window.location.href+'?verify='+currentArtwork.id;
+
+  certText.innerHTML=`ID: <b>${currentArtwork.id}</b><br>Title: ${currentArtwork.title}`;
+
+  qrImg.src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data="+encodeURIComponent(verifyURL);
+}
+
+function closeCert(){certModal.style.display='none';}
+
+function toggleEditor(){
+  editor.style.display = editor.style.display==='none'?'block':'none';
+}
+
+function addCard(){
+  const t=title.value;
+  const i=img.value;
+  const d=desc.value;
+
+  const card=document.createElement('div');
+  card.className='card';
+  card.onclick=()=>openModal(t,i,d);
+
+  card.innerHTML=`
+    <img src="${i}" />
+    <div class="card-content">
+      <h3>${t}</h3>
+      <p>${d}</p>
+    </div>
+  `;
+
+  grid.appendChild(card);
+}
+
+window.onclick=e=>{
+  if(e.target.id==='modal')closeModal();
+  if(e.target.id==='certModal')closeCert();
+};
+
+</script>
+
+</body>
+</html>
+
