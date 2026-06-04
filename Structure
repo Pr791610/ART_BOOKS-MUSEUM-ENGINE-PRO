@@ -1,0 +1,69 @@
+ART-BOOKS-MUSEUM-ENGINE-PRO/
+│
+├── index.html
+├── gallery.html
+├── viewer.html
+├── store.html
+├── books.html
+├── certificates.html
+├── humanitarian.html
+├── future.html
+│
+├── assets/
+│   ├── ITMK/
+│   ├── MK/
+│   ├── IT/
+│   ├── D/
+│   ├── BOOKS/
+│   │   ├── LA-CONOSCENZA-E-LA-VITA/
+│   │   ├── ZNAENJE-I-ZIVOT/
+│   │   └── MINI-BOOKS/
+│   │
+│   ├── CERTIFICATES/
+│   │   ├── ITMK/
+│   │   ├── MK/
+│   │   ├── IT/
+│   │   └── D/
+│   │
+│   ├── COUPONS/
+│   │   ├── ITMK/
+│   │   ├── MK/
+│   │   ├── IT/
+│   │   └── D/
+│   │
+│   ├── CIP/
+│   │   ├── CIP-BOOK-01.pdf
+│   │   └── CIP-BOOK-02.pdf
+│   │
+│   ├── REVIEWS/
+│   │   ├── REVIEW-01.pdf
+│   │   └── REVIEW-02.pdf
+│   │
+│   └── PHOTOCHROMO/
+│
+├── js/
+│   ├── app.js
+│   ├── gallery.js
+│   ├── store.js
+│   ├── certificates.js
+│   └── qr.js
+│
+├── data/
+│   ├── artworks.json
+│   ├── products.json
+│   ├── certificates.json
+│   ├── books.json
+│   └── coupons.json
+│
+├── styles/
+│   └── main.css
+│
+├── docs/
+│   ├── WAIVER.pdf
+│   ├── LICENSE.pdf
+│   ├── README.pdf
+│   └── PROJECT-DOCUMENTATION.pdf
+│
+├── README.md
+├── LICENSE
+└── .gitignore
